@@ -15,11 +15,12 @@ async function bootstrap() {
   const configService = app.get<ConfigService>(ConfigService);
   const servicePort = configService.getOrThrow<string>('SERVICE_PORT');
   const environment = configService.getOrThrow<string>('ENVIRONMENT');
+  const sentryDsn = configService.getOrThrow<string>('SENTRY_DSN');
   app.useLogger(new CustomLogger());
 
   if (environment !== 'local') {
     Sentry.init({
-      dsn: 'https://72c8804c0e385bc74566c73211d03f73@o4505860408147968.ingest.sentry.io/4505873814061056',
+      dsn: sentryDsn,
       environment,
     });
     app.use(Sentry.Handlers.requestHandler());

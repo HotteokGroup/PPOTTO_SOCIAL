@@ -11,6 +11,7 @@ CREATE TABLE `ShareAlbum` (
     `updatedAt` DATETIME(3) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
+    INDEX `ShareAlbum_id`(`id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -25,6 +26,9 @@ CREATE TABLE `ShareAlbumMember` (
     `updatedAt` DATETIME(3) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
+    INDEX `ShareAlbumMember_id`(`id`),
+    INDEX `ShareAlbumMember_userId`(`userId`),
+    INDEX `ShareAlbumMember_shareAlbumId_userId`(`shareAlbumId`, `userId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -38,5 +42,13 @@ CREATE TABLE `ShareAlbumHistory` (
     `description` VARCHAR(191) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
+    INDEX `ShareAlbumHistory_id`(`id`),
+    INDEX `ShareAlbumHistory_shareAlbumId`(`shareAlbumId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `ShareAlbumMember` ADD CONSTRAINT `ShareAlbumMember_shareAlbumId_fkey` FOREIGN KEY (`shareAlbumId`) REFERENCES `ShareAlbum`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ShareAlbumHistory` ADD CONSTRAINT `ShareAlbumHistory_shareAlbumId_fkey` FOREIGN KEY (`shareAlbumId`) REFERENCES `ShareAlbum`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

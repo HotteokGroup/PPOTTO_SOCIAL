@@ -56,6 +56,7 @@ CREATE TABLE `ShareAlbumInviteCode` (
     `updatedAt` DATETIME(3) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
+    UNIQUE INDEX `ShareAlbumInviteCode_code_key`(`code`),
     INDEX `ShareAlbumInviteCode_id`(`id`),
     INDEX `ShareAlbumInviteCode_code`(`code`),
     PRIMARY KEY (`id`)

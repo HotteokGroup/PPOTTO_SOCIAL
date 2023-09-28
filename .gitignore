@@ -36,3 +36,6 @@ lerna-debug.log*
 
 # Local Docker Compose
 environments/docker
+
+# open-api
+open-api

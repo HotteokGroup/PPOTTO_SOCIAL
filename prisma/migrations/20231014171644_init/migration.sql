@@ -29,6 +29,7 @@ CREATE TABLE `ShareAlbumMember` (
     INDEX `ShareAlbumMember_id`(`id`),
     INDEX `ShareAlbumMember_userId`(`userId`),
     INDEX `ShareAlbumMember_shareAlbumId_userId`(`shareAlbumId`, `userId`),
+    UNIQUE INDEX `ShareAlbumMember_shareAlbumId_userId_key`(`shareAlbumId`, `userId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

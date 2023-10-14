@@ -48,6 +48,8 @@ model ShareAlbumMember {
   //  ShareAlbumMember >-- ShareAlbum
   shareAlbum   ShareAlbum           @relation(fields: [shareAlbumId], references: [id])
 
+  //Unique
+  @@unique([shareAlbumId, userId], name: "ShareAlbumMember_shareAlbumId_userId")
   //Index
   @@index([id], name: "ShareAlbumMember_id")
   @@index([userId], name: "ShareAlbumMember_userId")

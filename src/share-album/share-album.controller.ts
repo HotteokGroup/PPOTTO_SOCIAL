@@ -1,14 +1,16 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 
 import { CreateShareAlbumCommand } from './command/create/create-album.command';
 import { ModifyShareAlbumCommand } from './command/modify/modify-album.command';
 import { CreateShareAlbumRequest, CreateShareAlbumResponse } from './dto/create-album.dto';
 import { GetSharedAlbumResponse } from './dto/get-album.dto';
+import { GetSharedAlbumsResponse } from './dto/get-albums.dto';
 import { ModifyShareAlbumRequest, ModifyShareAlbumResponse } from './dto/modify-album.dto';
 import { GetSharedAlbumQuery } from './query/get-album/get-album.query';
+import { GetSharedAlbumsQuery } from './query/get-albums/get-albums.query';
 import { ERROR_CODE, GenerateSwaggerDocumentByErrorCode } from '../lib/exception/error.constant';
 
 @Controller('share-album')
@@ -24,6 +26,14 @@ export class ShareAlbumController {
   @GenerateSwaggerDocumentByErrorCode([ERROR_CODE.INTERNAL_SERVER_ERROR, ERROR_CODE.SHARE_ALBUM_NOT_FOUND])
   async getShareAlbum(@Param('id') id: string) {
     return plainToInstance(GetSharedAlbumResponse, await this.queryBus.execute(new GetSharedAlbumQuery({ id })));
+  }
+
+  @Get()
+  @ApiOperation({ summary: '공유앨범 리스트 조회', description: '공유앨범 리스트를 조회합니다.' })
+  @ApiQuery({ name: 'userId', description: '유저 아이디', example: 1 })
+  @GenerateSwaggerDocumentByErrorCode([ERROR_CODE.INTERNAL_SERVER_ERROR])
+  async getShareAlbums(@Query('userId', ParseIntPipe) userId: number) {
+    return plainToInstance(GetSharedAlbumsResponse, await this.queryBus.execute(new GetSharedAlbumsQuery({ userId })));
   }
 
   @Post()

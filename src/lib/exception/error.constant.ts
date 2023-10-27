@@ -25,6 +25,15 @@ export const ERROR_CODE = dynamicRecord({
     message: '서버에 오류가 발생했습니다.',
     status: HttpStatus.INTERNAL_SERVER_ERROR,
   },
+
+  /**
+   * 앨범
+   */
+  SHARE_ALBUM_NOT_FOUND: {
+    errorCode: 'SHARE_ALBUM_NOT_FOUND',
+    message: '앨범을 찾을 수 없습니다.',
+    status: HttpStatus.NOT_FOUND,
+  },
 });
 
 // 스웨거 Exception Description을 위한 데코레이터

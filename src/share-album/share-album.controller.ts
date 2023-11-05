@@ -96,7 +96,7 @@ export class ShareAlbumController {
 
   @Patch(':id/member/:userId')
   @ApiOperation({ summary: '공유앨범 맴버 수정', description: '공유앨범 맴버를 수정합니다.' })
-  @GenerateSwaggerDocumentByErrorCode([ERROR_CODE.INTERNAL_SERVER_ERROR])
+  @GenerateSwaggerDocumentByErrorCode([ERROR_CODE.INTERNAL_SERVER_ERROR, ERROR_CODE.SHARE_ALBUM_MEMBER_NOT_FOUND])
   async modifyShareAlbumMember(
     @Param('id') id: string,
     @Param('userId', ParseIntPipe) userId: number,

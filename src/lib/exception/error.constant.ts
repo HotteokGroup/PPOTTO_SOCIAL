@@ -44,6 +44,11 @@ export const ERROR_CODE = dynamicRecord({
     message: '멤버를 찾을 수 없습니다.',
     status: HttpStatus.NOT_FOUND,
   },
+  SHARE_ALBUM_MEMBER_ALREADY_JOINED: {
+    errorCode: 'SHARE_ALBUM_MEMBER_ALREADY_JOINED',
+    message: '이미 가입된 멤버입니다.',
+    status: HttpStatus.BAD_REQUEST,
+  },
 });
 
 // 스웨거 Exception Description을 위한 데코레이터

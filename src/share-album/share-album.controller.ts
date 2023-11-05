@@ -1,15 +1,20 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 
 import { CreateShareAlbumCommand } from './command/create/create-album.command';
 import { CreateShareAlbumInviteCodeCommand } from './command/create-invite-code/create-invite-code.command';
+import { JoinShareAlbumByInviteCodeCommand } from './command/join-album-by-invite-code/join-album-by-invite-code.command';
 import { ModifyShareAlbumCommand } from './command/modify/modify-album.command';
 import { CreateShareAlbumRequest, CreateShareAlbumResponse } from './dto/create-album.dto';
 import { CreateShareAlbumInviteCodeResponse } from './dto/create-invite-code.dto';
 import { GetSharedAlbumResponse } from './dto/get-album.dto';
 import { GetSharedAlbumsResponse } from './dto/get-albums.dto';
+import {
+  JoinShareAlbumByInviteCodeRequest,
+  JoinShareAlbumByInviteCodeResponse,
+} from './dto/join-album-by-Invite-code.det';
 import { ModifyShareAlbumRequest, ModifyShareAlbumResponse } from './dto/modify-album.dto';
 import { GetSharedAlbumQuery } from './query/get-album/get-album.query';
 import { GetSharedAlbumsQuery } from './query/get-albums/get-albums.query';
@@ -65,6 +70,25 @@ export class ShareAlbumController {
     return plainToInstance(
       CreateShareAlbumInviteCodeResponse,
       await this.commandBus.execute(new CreateShareAlbumInviteCodeCommand({ albumId: id })),
+    );
+  }
+
+  @Post('invite-code/:code')
+  @ApiOperation({
+    summary: '공유앨범 초대코드로 공유앨범 가입',
+    description: '공유앨범 초대코드로 공유앨범에 가입합니다.',
+  })
+  @ApiParam({ name: 'code', description: '공유앨범 초대코드', example: 'I8Q32D' })
+  @GenerateSwaggerDocumentByErrorCode([ERROR_CODE.INTERNAL_SERVER_ERROR, ERROR_CODE.SHARE_ALBUM_INVITE_CODE_NOT_FOUND])
+  async joinShareAlbumByInviteCode(
+    @Param('code') code: string,
+    @Body() joinShareAlbumByInviteCodeRequest: JoinShareAlbumByInviteCodeRequest,
+  ) {
+    return plainToInstance(
+      JoinShareAlbumByInviteCodeResponse,
+      await this.commandBus.execute(
+        new JoinShareAlbumByInviteCodeCommand({ inviteCode: code, ...joinShareAlbumByInviteCodeRequest }),
+      ),
     );
   }
 }

@@ -28,15 +28,30 @@ export class JoinShareAlbumByInviteCodeHandler
       throw new NotFoundException(ERROR_CODE.SHARE_ALBUM_INVITE_CODE_NOT_FOUND);
     }
 
-    // 해당 공유앨범에 임시 멤버로 추가합니다.
-    await this.prismaService.shareAlbumMember.create({
-      data: {
+    // 이미 가입된 멤버인지 확인합니다.
+    const isAlreadyJoined = await this.prismaService.shareAlbumMember.findFirst({
+      where: {
         shareAlbumId: inviteCodeInfo.shareAlbumId,
         userId,
-        role: 'TEMPORARY',
-        joinedAt: new Date(),
       },
     });
-    return new JoinShareAlbumByInviteCodeCommandResult({ shareAlbumId: inviteCodeInfo.shareAlbumId });
+    if (isAlreadyJoined) {
+      throw new NotFoundException(ERROR_CODE.SHARE_ALBUM_MEMBER_ALREADY_JOINED);
+    }
+
+    // 해당 공유앨범에 임시 멤버로 추가합니다.
+    try {
+      await this.prismaService.shareAlbumMember.create({
+        data: {
+          shareAlbumId: inviteCodeInfo.shareAlbumId,
+          userId,
+          role: 'TEMPORARY',
+          joinedAt: new Date(),
+        },
+      });
+      return new JoinShareAlbumByInviteCodeCommandResult({ shareAlbumId: inviteCodeInfo.shareAlbumId });
+    } catch (error) {
+      throw new NotFoundException(ERROR_CODE.INTERNAL_SERVER_ERROR);
+    }
   }
 }

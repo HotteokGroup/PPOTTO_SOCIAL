@@ -4,8 +4,10 @@ import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 
 import { CreateShareAlbumCommand } from './command/create/create-album.command';
+import { CreateShareAlbumInviteCodeCommand } from './command/create-invite-code/create-invite-code.command';
 import { ModifyShareAlbumCommand } from './command/modify/modify-album.command';
 import { CreateShareAlbumRequest, CreateShareAlbumResponse } from './dto/create-album.dto';
+import { CreateShareAlbumInviteCodeResponse } from './dto/create-invite-code.dto';
 import { GetSharedAlbumResponse } from './dto/get-album.dto';
 import { GetSharedAlbumsResponse } from './dto/get-albums.dto';
 import { ModifyShareAlbumRequest, ModifyShareAlbumResponse } from './dto/modify-album.dto';
@@ -53,6 +55,16 @@ export class ShareAlbumController {
     return plainToInstance(
       ModifyShareAlbumResponse,
       await this.commandBus.execute(new ModifyShareAlbumCommand({ ...params, id })),
+    );
+  }
+
+  @Post(':id/invite-code')
+  @ApiOperation({ summary: '공유앨범 초대코드 생성', description: '공유앨범 초대코드를 생성합니다.' })
+  @GenerateSwaggerDocumentByErrorCode([ERROR_CODE.INTERNAL_SERVER_ERROR, ERROR_CODE.SHARE_ALBUM_NOT_FOUND])
+  async createShareAlbumInviteCode(@Param('id') id: string) {
+    return plainToInstance(
+      CreateShareAlbumInviteCodeResponse,
+      await this.commandBus.execute(new CreateShareAlbumInviteCodeCommand({ albumId: id })),
     );
   }
 }

@@ -9,7 +9,7 @@ import { ERROR_CODE } from '../../../lib/exception/error.constant';
 import { PrismaService } from '../../../lib/prisma/prisma.service';
 
 @CommandHandler(CreateShareAlbumInviteCodeCommand)
-export class CreateShareAlbumHandler
+export class CreateShareAlbumInviteCodeHandler
   implements ICommandHandler<CreateShareAlbumInviteCodeCommand, CreateShareAlbumInviteCodeCommandResult>
 {
   constructor(private readonly prismaService: PrismaService) {}

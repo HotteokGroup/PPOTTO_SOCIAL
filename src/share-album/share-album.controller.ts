@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
@@ -6,10 +6,12 @@ import { plainToInstance } from 'class-transformer';
 import { CreateShareAlbumCommand } from './command/create/create-album.command';
 import { CreateShareAlbumInviteCodeCommand } from './command/create-invite-code/create-invite-code.command';
 import { JoinShareAlbumByInviteCodeCommand } from './command/join-album-by-invite-code/join-album-by-invite-code.command';
+import { LeaveShareAlbumCommand } from './command/leave-album/leave-album.command';
 import { ModifyShareAlbumCommand } from './command/modify/modify-album.command';
 import { ModifyShareAlbumMemberCommand } from './command/modify-member/modify-member.command';
 import { CreateShareAlbumRequest, CreateShareAlbumResponse } from './dto/create-album.dto';
 import { CreateShareAlbumInviteCodeResponse } from './dto/create-invite-code.dto';
+import { DeleteShareAlbumMemberResponse } from './dto/delete-alum-member.dto';
 import { GetSharedAlbumResponse } from './dto/get-album.dto';
 import { GetSharedAlbumsResponse } from './dto/get-albums.dto';
 import {
@@ -105,6 +107,16 @@ export class ShareAlbumController {
     return plainToInstance(
       ModifyShareAlbumMemberResponse,
       await this.commandBus.execute(new ModifyShareAlbumMemberCommand({ ...params, albumId: id, userId })),
+    );
+  }
+
+  @Delete(':id/member/:userId')
+  @ApiOperation({ summary: '공유앨범 맴버 삭제', description: '공유앨범 맴버를 삭제합니다.' })
+  @GenerateSwaggerDocumentByErrorCode([ERROR_CODE.INTERNAL_SERVER_ERROR, ERROR_CODE.SHARE_ALBUM_MEMBER_NOT_FOUND])
+  async leaveShareAlbum(@Param('id') id: string, @Param('userId', ParseIntPipe) userId: number) {
+    return plainToInstance(
+      DeleteShareAlbumMemberResponse,
+      await this.commandBus.execute(new LeaveShareAlbumCommand({ albumId: id, userId })),
     );
   }
 }

@@ -4,6 +4,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { CreateShareAlbumHandler } from './command/create/create-album.handler';
 import { CreateShareAlbumInviteCodeHandler } from './command/create-invite-code/create-invite-code.handler';
 import { JoinShareAlbumByInviteCodeHandler } from './command/join-album-by-invite-code/join-album-by-invite-code.handler';
+import { LeaveShareAlbumHandler } from './command/leave-album/leave-album.handler';
 import { ModifyShareAlbumHandler } from './command/modify/modify-album.handler';
 import { ModifyShareAlbumMemberHandler } from './command/modify-member/modify-member.handler';
 import { GetSharedAlbumHandler } from './query/get-album/get-album.handler';
@@ -17,6 +18,7 @@ const commandHandlers = [
   ModifyShareAlbumMemberHandler,
   CreateShareAlbumInviteCodeHandler,
   JoinShareAlbumByInviteCodeHandler,
+  LeaveShareAlbumHandler,
 ];
 const queryHandlers = [GetSharedAlbumHandler, GetSharedAlbumsHandler];
 @Module({

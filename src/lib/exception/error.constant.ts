@@ -49,6 +49,15 @@ export const ERROR_CODE = dynamicRecord({
     message: '이미 가입된 멤버입니다.',
     status: HttpStatus.BAD_REQUEST,
   },
+
+  /**
+   * 피드
+   */
+  SHARE_ALBUM_FEED_NOT_FOUND: {
+    errorCode: 'SHARE_ALBUM_FEED_NOT_FOUND',
+    message: '피드를 찾을 수 없습니다.',
+    status: HttpStatus.NOT_FOUND,
+  },
 });
 
 // 스웨거 Exception Description을 위한 데코레이터

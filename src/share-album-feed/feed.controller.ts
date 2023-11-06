@@ -1,11 +1,13 @@
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 
 import { CreateShareAlbumFeedCommand } from './command/create-feed/create-feed.command';
 import { DeleteShareAlbumFeedCommand } from './command/delete-feed/delete-feed.command';
+import { ModifyShareAlbumFeedCommand } from './command/modify-feed/modify-feed.command';
 import { CreateShareAlbumFeedRequest, CreateShareAlbumFeedResponse } from './dto/create-feed.dto';
+import { ModifyShareAlbumFeedRequest } from './dto/modify-feed.dto';
 import { ERROR_CODE, GenerateSwaggerDocumentByErrorCode } from '../lib/exception/error.constant';
 
 @Controller('share-album')
@@ -42,6 +44,24 @@ export class ShareAlbumFeedController {
   ])
   async deleteFeed(@Param('id') id: string, @Param('feedId') feedId: string) {
     await this.commandBus.execute(new DeleteShareAlbumFeedCommand({ feedId, shareAlbumId: id }));
+    return true;
+  }
+
+  @Patch(':id/feed/:feedId')
+  @ApiOperation({ summary: '공유앨범 피드 수정', description: '공유앨범 피드를 수정합니다.' })
+  @ApiParam({ name: 'id', description: '공유앨범 아이디' })
+  @ApiParam({ name: 'feedId', description: '공유앨범 피드 아이디' })
+  @GenerateSwaggerDocumentByErrorCode([
+    ERROR_CODE.INTERNAL_SERVER_ERROR,
+    ERROR_CODE.SHARE_ALBUM_NOT_FOUND,
+    ERROR_CODE.SHARE_ALBUM_FEED_NOT_FOUND,
+  ])
+  async updateFeed(
+    @Param('id') id: string,
+    @Param('feedId') feedId: string,
+    @Body() params: ModifyShareAlbumFeedRequest,
+  ) {
+    await this.commandBus.execute(new ModifyShareAlbumFeedCommand({ ...params, feedId, shareAlbumId: id }));
     return true;
   }
 }

@@ -24,7 +24,7 @@ export class ModifyShareAlbumFeedCommand {
     contentLargeUrl?: string;
   }[];
 
-  constructor(params: Required<ModifyShareAlbumFeedCommand>) {
+  constructor(params: ModifyShareAlbumFeedCommand) {
     Object.assign(this, params);
   }
 }

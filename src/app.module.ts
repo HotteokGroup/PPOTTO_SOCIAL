@@ -13,11 +13,13 @@ import { AppService } from './app.service';
 import { AllExceptionsFilter } from './lib/exception/all-exception.filter';
 import { ERROR_CODE } from './lib/exception/error.constant';
 import { ShareAlbumModule } from './share-album/share-album.module';
+import { ShareAlbumFeedModule } from './share-album-feed/feed.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: `environments/.env.${process.env.NODE_ENV}` }),
     ShareAlbumModule,
+    ShareAlbumFeedModule,
   ],
   controllers: [AppController],
   providers: [

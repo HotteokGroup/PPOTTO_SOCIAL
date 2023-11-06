@@ -3,10 +3,10 @@ CREATE TABLE `ShareAlbum` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `bio` VARCHAR(191) NULL,
-    `thumbnailIId` VARCHAR(191) NULL,
-    `smallThumbnailIUrl` VARCHAR(191) NULL,
-    `mediumThumbnailIUrl` VARCHAR(191) NULL,
-    `largeThumbnailIUrl` VARCHAR(191) NULL,
+    `thumbnailId` VARCHAR(191) NULL,
+    `smallThumbnailUrl` VARCHAR(191) NULL,
+    `mediumThumbnailUrl` VARCHAR(191) NULL,
+    `largeThumbnailUrl` VARCHAR(191) NULL,
     `deletedAt` DATETIME(3) NULL,
     `updatedAt` DATETIME(3) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -29,6 +29,7 @@ CREATE TABLE `ShareAlbumMember` (
     INDEX `ShareAlbumMember_id`(`id`),
     INDEX `ShareAlbumMember_userId`(`userId`),
     INDEX `ShareAlbumMember_shareAlbumId_userId`(`shareAlbumId`, `userId`),
+    UNIQUE INDEX `ShareAlbumMember_shareAlbumId_userId_key`(`shareAlbumId`, `userId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

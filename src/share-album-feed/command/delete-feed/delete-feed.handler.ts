@@ -16,11 +16,15 @@ export class DeleteShareAlbumFeedHandler implements ICommandHandler<DeleteShareA
     const feed = await this.prismaService.shareAlbumFeed.findUnique({
       where: {
         id,
-        shareAlbumId,
       },
     });
-    if (!feed) {
+    // 피드가 존재하지 않거나 삭제되었을 경우
+    if (!feed || feed.deletedAt) {
       throw new NotFoundException(ERROR_CODE.SHARE_ALBUM_FEED_NOT_FOUND);
+    }
+    // 피드 소유 앨범 아이디가 다를 경우
+    if (feed.shareAlbumId !== shareAlbumId) {
+      throw new NotFoundException(ERROR_CODE.SHARE_ALBUM_NOT_FOUND);
     }
 
     // 피드 및 피드 콘텐츠 소프트 딜리트

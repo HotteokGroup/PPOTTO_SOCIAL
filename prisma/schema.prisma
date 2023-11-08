@@ -29,6 +29,7 @@ model ShareAlbum {
   shareAlbumHistory    ShareAlbumHistory[]
   // ShareAlbum --< ShareAlbumInviteCode
   shareAlbumInviteCode ShareAlbumInviteCode[]
+  // ShareAlbum --< ShareAlbumFeed
   ShareAlbumFeed       ShareAlbumFeed[]
 
   //Index
@@ -129,8 +130,11 @@ model ShareAlbumFeed {
   createdAt    DateTime      @default(now())
   // Relation
   // ShareAlbumFeed >-- ShareAlbum
+  // ShareAlbumFeed --< FeedContent
+  // ShareAlbumFeed --< FeedComment
   shareAlbum   ShareAlbum    @relation(fields: [shareAlbumId], references: [id])
   FeedContent  FeedContent[]
+  FeedComment  FeedComment[]
 
   // Index
   @@index([id], name: "ShareAlbumFeed_id")
@@ -163,4 +167,23 @@ model FeedContent {
 enum FeedContentType {
   IMAGE
   VIDEO
+}
+
+/// 피드 코멘트
+model FeedComment {
+  id             String         @id @default(cuid())
+  feedId         String
+  userId         Int
+  content        String?
+  deletedAt      DateTime?
+  updatedAt      DateTime       @updatedAt
+  createdAt      DateTime       @default(now())
+  // Relation
+  // FeedComment >-- ShareAlbumFeed
+  shareAlbumFeed ShareAlbumFeed @relation(fields: [feedId], references: [id])
+
+  // Index
+  @@index([id], name: "FeedComment_id")
+  @@index([feedId], name: "FeedComment_feedId")
+  @@index([userId], name: "FeedComment_userId")
 }

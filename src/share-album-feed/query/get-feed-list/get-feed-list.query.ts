@@ -1,6 +1,6 @@
 import { FeedContentType } from '@prisma/client';
 
-export class GetFeedListQuery {
+export class GetShareAlbumFeedListQuery {
   /** 공유앨범 아이디 */
   shareAlbumId: string;
 
@@ -10,12 +10,12 @@ export class GetFeedListQuery {
   /** 페이지 번호 zero-base */
   page: number;
 
-  constructor(params: GetFeedListQuery) {
+  constructor(params: GetShareAlbumFeedListQuery) {
     Object.assign(this, params);
   }
 }
 
-export class GetFeedListQueryResult {
+export class GetShareAlbumFeedListQueryResult {
   /** 토탈 카운트 */
   total: number;
 
@@ -50,7 +50,7 @@ export class GetFeedListQueryResult {
     updatedAt: Date;
   }[];
 
-  constructor(params: GetFeedListQueryResult) {
+  constructor(params: GetShareAlbumFeedListQueryResult) {
     Object.assign(this, params);
   }
 }

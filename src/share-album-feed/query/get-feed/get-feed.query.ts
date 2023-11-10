@@ -1,15 +1,18 @@
 import { FeedContentType } from '@prisma/client';
 
-export class GetFeedQuery {
+export class GetShareAlbumFeedQuery {
+  /** 공유 앨범 아이디 */
+  shareAlbumId: string;
+
   /** 피드 아이디 */
   feedId: string;
 
-  constructor(params: GetFeedQuery) {
+  constructor(params: GetShareAlbumFeedQuery) {
     Object.assign(this, params);
   }
 }
 
-export class GetFeedQueryResult {
+export class GetShareAlbumFeedQueryResult {
   /** 피드 아이디 */
   id: string;
 
@@ -33,6 +36,7 @@ export class GetFeedQueryResult {
 
   /** 피드 코멘트 */
   FeedComment: {
+    id: string;
     userId: number;
     description: string;
     createdAt: Date;
@@ -44,7 +48,7 @@ export class GetFeedQueryResult {
   /** 수정일 */
   updatedAt: Date;
 
-  constructor(params: GetFeedQueryResult) {
+  constructor(params: GetShareAlbumFeedQueryResult) {
     Object.assign(this, params);
   }
 }

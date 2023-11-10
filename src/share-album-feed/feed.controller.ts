@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
@@ -12,8 +12,12 @@ import { ModifyShareAlbumFeedCommand } from './command/modify-feed/modify-feed.c
 import { CreateShareAlbumFeedCommentRequest, CreateShareAlbumFeedCommentResponse } from './dto/create-comment.dto';
 import { CreateShareAlbumFeedRequest, CreateShareAlbumFeedResponse } from './dto/create-feed.dto';
 import { DeleteShareAlbumFeedCommentRequest, DeleteShareAlbumFeedCommentResponse } from './dto/delete-comment.dto';
+import { GetShareAlbumFeedListRequest, GetShareAlbumFeedListResponse } from './dto/get-feed-list.dto';
+import { GetShareAlbumFeedResponse } from './dto/get-feed.dto';
 import { ModifyShareAlbumFeedCommentRequest, ModifyShareAlbumFeedCommentResponse } from './dto/modify-comment.dto';
 import { ModifyShareAlbumFeedRequest } from './dto/modify-feed.dto';
+import { GetShareAlbumFeedQuery } from './query/get-feed/get-feed.query';
+import { GetShareAlbumFeedListQuery } from './query/get-feed-list/get-feed-list.query';
 import { ERROR_CODE, GenerateSwaggerDocumentByErrorCode } from '../lib/exception/error.constant';
 
 @Controller('share-album')
@@ -23,6 +27,29 @@ export class ShareAlbumFeedController {
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
   ) {}
+
+  @Get(':id/feed')
+  @ApiOperation({ summary: '공유앨범 피드 리스트', description: '공유앨범 피드 리스트를 가져옵니다.' })
+  @ApiParam({ name: 'id', description: '공유앨범 아이디' })
+  @GenerateSwaggerDocumentByErrorCode([ERROR_CODE.INTERNAL_SERVER_ERROR, ERROR_CODE.SHARE_ALBUM_NOT_FOUND])
+  async getFeedList(@Query() params: GetShareAlbumFeedListRequest, @Param('id') id: string) {
+    return plainToInstance(
+      GetShareAlbumFeedListResponse,
+      await this.queryBus.execute(new GetShareAlbumFeedListQuery({ ...params, shareAlbumId: id })),
+    );
+  }
+
+  @Get(':id/feed/:feedId')
+  @ApiOperation({ summary: '공유앨범 피드', description: '공유앨범 피드를 가져옵니다.' })
+  @ApiParam({ name: 'id', description: '공유앨범 아이디' })
+  @ApiParam({ name: 'feedId', description: '공유앨범 피드 아이디' })
+  @GenerateSwaggerDocumentByErrorCode([ERROR_CODE.INTERNAL_SERVER_ERROR])
+  async getFeed(@Param('feedId') feedId: string, @Param('id') id: string) {
+    return plainToInstance(
+      GetShareAlbumFeedResponse,
+      await this.queryBus.execute(new GetShareAlbumFeedQuery({ feedId, shareAlbumId: id })),
+    );
+  }
 
   @Post(':id/feed')
   @ApiOperation({ summary: '공유앨범 피드 생성', description: '공유앨범 피드를 생성합니다.' })

@@ -8,6 +8,8 @@ import { DeleteShareAlbumFeedHandler } from './command/delete-feed/delete-feed.h
 import { ModifyShareAlbumFeedCommentHandler } from './command/modify-comment/modify-comment.handler';
 import { ModifyShareAlbumFeedHandler } from './command/modify-feed/modify-feed.handler';
 import { ShareAlbumFeedController } from './feed.controller';
+import { GetShareAlbumFeedHandler } from './query/get-feed/get-feed.handler';
+import { GetShareAlbumFeedListHandler } from './query/get-feed-list/get-feed-list.handler';
 import { PrismaModule } from '../lib/prisma/prisma.module';
 
 const CommandHandlers = [
@@ -18,9 +20,11 @@ const CommandHandlers = [
   ModifyShareAlbumFeedHandler,
   ModifyShareAlbumFeedCommentHandler,
 ];
+
+const QueryHandlers = [GetShareAlbumFeedHandler, GetShareAlbumFeedListHandler];
 @Module({
   imports: [CqrsModule, PrismaModule],
   controllers: [ShareAlbumFeedController],
-  providers: [...CommandHandlers],
+  providers: [...CommandHandlers, ...QueryHandlers],
 })
 export class ShareAlbumFeedModule {}

@@ -54,10 +54,10 @@ export class GetShareAlbumFeedListItem {
   @ApiProperty({ description: '피드 내용', example: '호떡짱' })
   description: string;
 
-  @Expose()
+  @Expose({ name: 'FeedContent' })
   @ApiProperty({ description: '피드 콘텐츠', type: [GetShareAlbumFeedListContentItem] })
   @Type(() => GetShareAlbumFeedListContentItem)
-  FeedContent: GetShareAlbumFeedListContentItem[];
+  feedContentList: GetShareAlbumFeedListContentItem[];
 
   @Expose()
   @ApiProperty({ description: '생성일', example: '2021-01-01T00:00:00.000Z' })

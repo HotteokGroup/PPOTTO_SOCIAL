@@ -20,6 +20,7 @@ export class ModifyShareAlbumFeedCollectionHandler
     const collection = await this.prismaService.feedCollection.findFirst({
       where: {
         id: collectionId,
+        deletedAt: null,
       },
     });
     if (!collection) {

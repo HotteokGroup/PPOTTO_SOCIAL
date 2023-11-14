@@ -67,6 +67,15 @@ export const ERROR_CODE = dynamicRecord({
     message: '댓글을 찾을 수 없습니다.',
     status: HttpStatus.NOT_FOUND,
   },
+
+  /**
+   * 피드 컬렉션
+   */
+  SHARE_ALBUM_FEED_COLLECTION_NOT_FOUND: {
+    errorCode: 'SHARE_ALBUM_FEED_COLLECTION_NOT_FOUND',
+    message: '컬렉션을 찾을 수 없습니다.',
+    status: HttpStatus.NOT_FOUND,
+  },
 });
 
 // 스웨거 Exception Description을 위한 데코레이터

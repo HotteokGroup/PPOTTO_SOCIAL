@@ -76,6 +76,11 @@ export const ERROR_CODE = dynamicRecord({
     message: '컬렉션을 찾을 수 없습니다.',
     status: HttpStatus.NOT_FOUND,
   },
+  COLLECTION_FEED_NOT_FOUND: {
+    errorCode: 'COLLECTION_FEED_NOT_FOUND',
+    message: '컬렉션에 해당 피드가 없습니다.',
+    status: HttpStatus.NOT_FOUND,
+  },
 });
 
 // 스웨거 Exception Description을 위한 데코레이터

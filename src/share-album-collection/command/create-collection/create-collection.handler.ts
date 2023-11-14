@@ -23,6 +23,6 @@ export class CreateShareAlbumFeedCollectionHandler
       },
     });
 
-    return new CreateShareAlbumFeedCollectionCommandResult({ id: collection.id });
+    return new CreateShareAlbumFeedCollectionCommandResult({ collectionId: collection.id });
   }
 }

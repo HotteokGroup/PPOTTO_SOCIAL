@@ -15,7 +15,7 @@ export class CreateShareAlbumFeedCollectionCommand {
 
 export class CreateShareAlbumFeedCollectionCommandResult {
   /** 컬렉션 아이디 */
-  id: string;
+  collectionId: string;
 
   constructor(params: CreateShareAlbumFeedCollectionCommandResult) {
     Object.assign(this, params);

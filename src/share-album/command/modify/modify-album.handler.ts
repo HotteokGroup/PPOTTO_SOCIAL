@@ -13,7 +13,10 @@ export class ModifyShareAlbumHandler
     const { id, name, bio } = command;
     const updateResult = await this.prismaService.shareAlbum.update({
       where: { id },
-      data: { name, bio },
+      data: {
+        ...(name && { name }),
+        ...(bio && { bio }),
+      },
     });
 
     return new ModifyShareAlbumCommandResult({ id: updateResult.id });

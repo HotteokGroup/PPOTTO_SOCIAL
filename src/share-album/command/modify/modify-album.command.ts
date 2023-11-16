@@ -3,10 +3,10 @@ export class ModifyShareAlbumCommand {
   readonly id: string;
 
   /** 공유앨범 명 */
-  readonly name: string;
+  readonly name?: string;
 
   /** 공유앨범 소개 */
-  readonly bio: string;
+  readonly bio?: string;
 
   constructor(params: ModifyShareAlbumCommand) {
     Object.assign(this, params);

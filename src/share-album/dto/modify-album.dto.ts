@@ -1,17 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class ModifyShareAlbumRequest {
   @ApiProperty({ description: '공유앨범 명', example: '내 일상앨범' })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name?: string;
 
   @ApiProperty({ description: '공유앨범 설명', example: '내 일상을 공유하는 앨범' })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  bio: string;
+  bio?: string;
 }
 
 @Exclude()

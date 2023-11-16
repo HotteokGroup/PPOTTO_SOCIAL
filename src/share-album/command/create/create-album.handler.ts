@@ -20,7 +20,7 @@ export class CreateShareAlbumHandler
       const result = await this.prismaService.shareAlbum.create({
         data: {
           name,
-          bio,
+          ...(bio && { bio }),
           shareAlbumMemberList: {
             create: {
               userId: ownerId,

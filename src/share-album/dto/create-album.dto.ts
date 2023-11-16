@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateShareAlbumRequest {
   @ApiProperty({ description: '공유앨범 명', example: '내 일상앨범' })
@@ -9,9 +9,10 @@ export class CreateShareAlbumRequest {
   name: string;
 
   @ApiProperty({ description: '공유앨범 설명', example: '내 일상을 공유하는 앨범' })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  bio: string;
+  bio?: string;
 
   @ApiProperty({ description: '공유앨범 생성자의 아이디', example: '1' })
   @IsNumber()

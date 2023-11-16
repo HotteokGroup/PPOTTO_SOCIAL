@@ -6,7 +6,7 @@ import { ERROR_CODE } from '../../../lib/exception/error.constant';
 import { PrismaService } from '../../../lib/prisma/prisma.service';
 
 @CommandHandler(DeleteFeedsToCollectionCommand)
-export class DeleteShareAlbumFeedToCollectionHandler
+export class DeleteFeedsToCollectionHandler
   implements ICommandHandler<DeleteFeedsToCollectionCommand, DeleteFeedsToCollectionCommandResult>
 {
   constructor(private readonly prismaService: PrismaService) {}

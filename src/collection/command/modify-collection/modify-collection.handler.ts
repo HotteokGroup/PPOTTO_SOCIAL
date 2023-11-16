@@ -6,7 +6,7 @@ import { ERROR_CODE } from '../../../lib/exception/error.constant';
 import { PrismaService } from '../../../lib/prisma/prisma.service';
 
 @CommandHandler(ModifyCollectionCommand)
-export class ModifyShareAlbumFeedCollectionHandler
+export class ModifyCollectionHandler
   implements ICommandHandler<ModifyCollectionCommand, ModifyCollectionCommandResult>
 {
   constructor(private readonly prismaService: PrismaService) {}

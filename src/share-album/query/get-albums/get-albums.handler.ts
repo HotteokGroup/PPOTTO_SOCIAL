@@ -12,14 +12,14 @@ export class GetSharedAlbumsHandler implements IQueryHandler<GetSharedAlbumsQuer
 
     const result = await this.prismaService.shareAlbum.findMany({
       where: {
-        shareAlbumMember: {
+        shareAlbumMemberList: {
           some: {
             userId,
             deletedAt: null,
           },
         },
       },
-      include: { shareAlbumMember: true },
+      include: { shareAlbumMemberList: true },
     });
     return new GetSharedAlbumsQueryResult({ list: result });
   }

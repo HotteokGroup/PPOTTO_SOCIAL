@@ -21,7 +21,7 @@ export class CreateShareAlbumHandler
         data: {
           name,
           bio,
-          shareAlbumMember: {
+          shareAlbumMemberList: {
             create: {
               userId: ownerId,
               role: 'OWNER',

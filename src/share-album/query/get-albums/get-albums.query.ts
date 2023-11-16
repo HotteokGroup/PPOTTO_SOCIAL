@@ -20,7 +20,7 @@ export class GetSharedAlbumsQueryResult {
     bio: string;
 
     /** 앨범 맴버 */
-    shareAlbumMember: ShareAlbumMember[];
+    shareAlbumMemberList: ShareAlbumMember[];
   }[];
 
   constructor(params: GetSharedAlbumsQueryResult) {

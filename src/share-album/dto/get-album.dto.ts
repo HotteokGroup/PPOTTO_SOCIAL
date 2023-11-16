@@ -3,7 +3,7 @@ import { ShareAlbumMemberRole } from '@prisma/client';
 import { Exclude, Expose, Type } from 'class-transformer';
 
 @Exclude()
-class GetSharedAlbumMember {
+class GetSharedAlbumMemberItem {
   @Expose()
   @ApiProperty({ description: '앨범 공유 멤버 아이디', example: 1 })
   userId: number;
@@ -32,6 +32,6 @@ export class GetSharedAlbumResponse {
   bio: string;
 
   @Expose()
-  @Type(() => GetSharedAlbumMember)
-  shareAlbumMember: GetSharedAlbumMember[];
+  @Type(() => GetSharedAlbumMemberItem)
+  shareAlbumMemberList: GetSharedAlbumMemberItem[];
 }

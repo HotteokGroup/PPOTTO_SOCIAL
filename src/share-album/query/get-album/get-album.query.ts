@@ -19,7 +19,7 @@ export class GetSharedAlbumQueryResult {
   readonly bio: string;
 
   /** 앨범 맴버 */
-  readonly shareAlbumMember: ShareAlbumMember[];
+  readonly shareAlbumMemberList: ShareAlbumMember[];
 
   constructor(params: GetSharedAlbumQueryResult) {
     Object.assign(this, params);

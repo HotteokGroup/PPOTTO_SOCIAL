@@ -14,7 +14,7 @@ export class GetSharedAlbumHandler implements IQueryHandler<GetSharedAlbumQuery,
 
     const album = await this.prismaService.shareAlbum.findUnique({
       where: { id },
-      include: { shareAlbumMember: true },
+      include: { shareAlbumMemberList: true },
     });
     if (!album) throw new NotFoundException(ERROR_CODE.SHARE_ALBUM_NOT_FOUND);
 

@@ -14,15 +14,15 @@ export class GetFeedContentItem {
 
   @Expose()
   @ApiProperty({ description: '콘텐츠 URL', example: 'https://...' })
-  contentSmallUrl: string;
+  contentSmallUrl?: string;
 
   @Expose()
   @ApiProperty({ description: '콘텐츠 URL', example: 'https://...' })
-  contentMediumUrl: string;
+  contentMediumUrl?: string;
 
   @Expose()
   @ApiProperty({ description: '콘텐츠 URL', example: 'https://...' })
-  contentLargeUrl: string;
+  contentLargeUrl?: string;
 }
 
 @Exclude()
@@ -56,7 +56,7 @@ export class GetFeedResponse {
 
   @Expose()
   @ApiProperty({ description: '피드 내용', example: '호떡짱' })
-  description: string;
+  description?: string;
 
   @Expose()
   @ApiProperty({ description: '피드 콘텐츠', type: [GetFeedContentItem] })

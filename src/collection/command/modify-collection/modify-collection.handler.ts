@@ -6,7 +6,7 @@ import { ERROR_CODE } from '../../../lib/exception/error.constant';
 import { PrismaService } from '../../../lib/prisma/prisma.service';
 
 @CommandHandler(ModifyCollectionCommand)
-export class ModifyShareAlbumFeedCollectionHandler
+export class ModifyCollectionHandler
   implements ICommandHandler<ModifyCollectionCommand, ModifyCollectionCommandResult>
 {
   constructor(private readonly prismaService: PrismaService) {}
@@ -21,7 +21,7 @@ export class ModifyShareAlbumFeedCollectionHandler
       },
     });
     if (!collection) {
-      throw new NotFoundException(ERROR_CODE.SHARE_ALBUM_FEED_COLLECTION_NOT_FOUND);
+      throw new NotFoundException(ERROR_CODE.COLLECTION_NOT_FOUND);
     }
 
     // 컬렉션 수정

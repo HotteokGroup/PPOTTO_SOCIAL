@@ -19,7 +19,7 @@ export class AddFeedsToCollectionHandler
       where: { id: collectionId, deletedAt: null },
     });
     if (!collection) {
-      throw new NotFoundException(ERROR_CODE.SHARE_ALBUM_FEED_COLLECTION_NOT_FOUND);
+      throw new NotFoundException(ERROR_CODE.COLLECTION_NOT_FOUND);
     }
     // 존재하는 피드인지 확인
     const feed = await this.prismaService.feed.findUnique({
@@ -27,6 +27,13 @@ export class AddFeedsToCollectionHandler
     });
     if (!feed) {
       throw new NotFoundException(ERROR_CODE.SHARE_ALBUM_FEED_NOT_FOUND);
+    }
+    // 이미 컬렉션에 추가된 피드인지 확인
+    const existFeed = await this.prismaService.feedsOnCollection.findFirst({
+      where: { collectionId, feedId },
+    });
+    if (existFeed) {
+      throw new NotFoundException(ERROR_CODE.COLLECTION_FEED_ALREADY_EXIST);
     }
 
     // 컬렉션 추가

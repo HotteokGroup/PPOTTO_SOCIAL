@@ -6,7 +6,7 @@ import { ERROR_CODE } from '../../../lib/exception/error.constant';
 import { PrismaService } from '../../../lib/prisma/prisma.service';
 
 @CommandHandler(DeleteCollectionCommand)
-export class DeleteShareAlbumFeedCollectionHandler
+export class DeleteCollectionHandler
   implements ICommandHandler<DeleteCollectionCommand, DeleteCollectionCommandResult>
 {
   constructor(private readonly prismaService: PrismaService) {}
@@ -22,7 +22,7 @@ export class DeleteShareAlbumFeedCollectionHandler
       },
     });
     if (!collection) {
-      throw new NotFoundException(ERROR_CODE.SHARE_ALBUM_FEED_COLLECTION_NOT_FOUND);
+      throw new NotFoundException(ERROR_CODE.COLLECTION_NOT_FOUND);
     }
 
     // 컬렉션 삭제

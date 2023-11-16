@@ -71,8 +71,8 @@ export const ERROR_CODE = dynamicRecord({
   /**
    * 피드 컬렉션
    */
-  SHARE_ALBUM_FEED_COLLECTION_NOT_FOUND: {
-    errorCode: 'SHARE_ALBUM_FEED_COLLECTION_NOT_FOUND',
+  COLLECTION_NOT_FOUND: {
+    errorCode: 'COLLECTION_NOT_FOUND',
     message: '컬렉션을 찾을 수 없습니다.',
     status: HttpStatus.NOT_FOUND,
   },
@@ -80,6 +80,11 @@ export const ERROR_CODE = dynamicRecord({
     errorCode: 'COLLECTION_FEED_NOT_FOUND',
     message: '컬렉션에 해당 피드가 없습니다.',
     status: HttpStatus.NOT_FOUND,
+  },
+  COLLECTION_FEED_ALREADY_EXIST: {
+    errorCode: 'COLLECTION_FEED_ALREADY_EXIST',
+    message: '이미 컬렉션에 추가된 피드입니다.',
+    status: HttpStatus.BAD_REQUEST,
   },
 });
 

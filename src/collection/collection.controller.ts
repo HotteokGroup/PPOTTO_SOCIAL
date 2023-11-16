@@ -6,10 +6,12 @@ import { plainToInstance } from 'class-transformer';
 import { AddFeedsToCollectionCommand } from './command/add-feed/add-feed.command';
 import { CreateCollectionCommand } from './command/create-collection/create-collection.command';
 import { DeleteCollectionCommand } from './command/delete-collection/delete-collection.command';
+import { DeleteFeedsToCollectionCommand } from './command/delete-feed/delete-feed.command';
 import { ModifyCollectionCommand } from './command/modify-collection/modify-collection.command';
 import { AddFeedToCollectionRequest, AddFeedToCollectionResponse } from './dto/add-feed-to-collection.dto';
 import { CreateCollectionRequest, CreateCollectionResponse } from './dto/create-collection.dto';
 import { DeleteCollectionResponse } from './dto/delete-collection.dto';
+import { DeleteFeedToCollectionResponse } from './dto/delete-feed-to-collection.dto';
 import { ModifyCollectionRequest, ModifyCollectionResponse } from './dto/modify-collection.dto';
 import { GenerateSwaggerDocumentByErrorCode, ERROR_CODE } from '../lib/exception/error.constant';
 
@@ -66,6 +68,18 @@ export class CollectionController {
     return plainToInstance(
       AddFeedToCollectionResponse,
       await this.commandBus.execute(new AddFeedsToCollectionCommand({ ...params, collectionId })),
+    );
+  }
+
+  @Delete(':collectionId/feed/:feedId')
+  @ApiOperation({ summary: '컬렉션에 피드 삭제', description: '컬렉션에 피드를 삭제합니다.' })
+  @ApiParam({ name: 'collectionId', description: '컬렉션 아이디', example: 'clp0wkn6k00007z209fylkkgg' })
+  @ApiParam({ name: 'feedId', description: '피드 아이디', example: 'clp0wkn6k00007z209fylkkgg' })
+  @GenerateSwaggerDocumentByErrorCode([ERROR_CODE.INTERNAL_SERVER_ERROR, ERROR_CODE.COLLECTION_FEED_NOT_FOUND])
+  async deleteFeedToCollection(@Param('collectionId') collectionId: string, @Param('feedId') feedId: string) {
+    return plainToInstance(
+      DeleteFeedToCollectionResponse,
+      await this.commandBus.execute(new DeleteFeedsToCollectionCommand({ collectionId, feedId })),
     );
   }
 }

@@ -7,6 +7,7 @@ import { CreateCollectionHandler } from './command/create-collection/create-coll
 import { DeleteCollectionHandler } from './command/delete-collection/delete-collection.handler';
 import { DeleteFeedsToCollectionHandler } from './command/delete-feed/delete-feed.handler';
 import { ModifyCollectionHandler } from './command/modify-collection/modify-collection.handler';
+import { PrismaModule } from '../lib/prisma/prisma.module';
 
 const commandHandlers = [
   AddFeedsToCollectionHandler,
@@ -17,7 +18,7 @@ const commandHandlers = [
 ];
 
 @Module({
-  imports: [CqrsModule],
+  imports: [CqrsModule, PrismaModule],
   controllers: [CollectionController],
   providers: [...commandHandlers],
 })

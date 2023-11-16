@@ -58,15 +58,15 @@ export class GetFeedResponse {
   @ApiProperty({ description: '피드 내용', example: '호떡짱' })
   description: string;
 
-  @Expose({ name: 'FeedContent' })
+  @Expose()
   @ApiProperty({ description: '피드 콘텐츠', type: [GetFeedContentItem] })
   @Type(() => GetFeedContentItem)
-  feedContentList: GetFeedContentItem[];
+  contentList: GetFeedContentItem[];
 
-  @Expose({ name: 'FeedComment' })
+  @Expose()
   @ApiProperty({ description: '피드 코멘트', type: [GetFeedCommentItem] })
   @Type(() => GetFeedCommentItem)
-  feedCommentList: GetFeedCommentItem[];
+  commentList: GetFeedCommentItem[];
 
   @Expose()
   @ApiProperty({ description: '생성일', example: '2021-01-01T00:00:00.000Z' })

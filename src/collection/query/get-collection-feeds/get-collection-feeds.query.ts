@@ -24,11 +24,14 @@ export class GetCollectionFeedsQueryResult {
     /** 피드 아이디 */
     id: string;
 
+    /** 공유앨범 아이디 */
+    shareAlbumId: string;
+
     /** 유저 아아디 */
     userId: number;
 
     /** 피드 내용 */
-    description: string;
+    description?: string;
 
     /** 피드 콘텐츠 */
     contentList: {
@@ -37,9 +40,9 @@ export class GetCollectionFeedsQueryResult {
       /** 피드 타입 */
       type: FeedContentType;
       /** 피드 콘텐츠 URL */
-      contentSmallUrl: string;
-      contentMediumUrl: string;
-      contentLargeUrl: string;
+      contentSmallUrl?: string;
+      contentMediumUrl?: string;
+      contentLargeUrl?: string;
       createdAt: Date;
     }[];
 

@@ -1,9 +1,9 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { FeedContentType } from '@prisma/client';
 import { Exclude, Expose, Transform, Type } from 'class-transformer';
-import { IsNumber, IsOptional } from 'class-validator';
+import { IsOptional, IsNumber } from 'class-validator';
 
-export class GetFeedListRequest {
+export class GetCollectionFeedsRequest {
   @ApiPropertyOptional({ description: '페이지 사이즈', example: 20, default: 20 })
   @IsOptional()
   @Transform(({ value }) => Number(value))
@@ -18,7 +18,7 @@ export class GetFeedListRequest {
 }
 
 @Exclude()
-export class GetFeedListContentItem {
+export class GetCollectionFeedsContentItem {
   @Expose()
   @ApiProperty({ description: '피드 아이디' })
   id: string;
@@ -41,7 +41,7 @@ export class GetFeedListContentItem {
 }
 
 @Exclude()
-export class GetFeedListItem {
+export class GetCollectionFeedsItem {
   @Expose()
   @ApiProperty({ description: '피드 아이디' })
   id: string;
@@ -55,9 +55,9 @@ export class GetFeedListItem {
   description: string;
 
   @Expose()
-  @ApiProperty({ description: '피드 콘텐츠', type: [GetFeedListContentItem] })
-  @Type(() => GetFeedListContentItem)
-  contentList: GetFeedListContentItem[];
+  @ApiProperty({ description: '피드 콘텐츠', type: [GetCollectionFeedsContentItem] })
+  @Type(() => GetCollectionFeedsContentItem)
+  contentList: GetCollectionFeedsContentItem[];
 
   @Expose()
   @ApiProperty({ description: '생성일', example: '2021-01-01T00:00:00.000Z' })
@@ -69,13 +69,13 @@ export class GetFeedListItem {
 }
 
 @Exclude()
-export class GetFeedListResponse {
+export class GetCollectionFeedsResponse {
   @Expose()
   @ApiProperty({ description: '토탈 카운트' })
   total: number;
 
   @Expose()
-  @ApiProperty({ description: '피드 리스트', type: [GetFeedListItem] })
-  @Type(() => GetFeedListItem)
-  list: GetFeedListItem[];
+  @ApiProperty({ description: '피드 리스트', type: [GetCollectionFeedsItem] })
+  @Type(() => GetCollectionFeedsItem)
+  list: GetCollectionFeedsItem[];
 }

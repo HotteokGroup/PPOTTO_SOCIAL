@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
@@ -12,7 +12,11 @@ import { AddFeedToCollectionRequest, AddFeedToCollectionResponse } from './dto/a
 import { CreateCollectionRequest, CreateCollectionResponse } from './dto/create-collection.dto';
 import { DeleteCollectionResponse } from './dto/delete-collection.dto';
 import { DeleteFeedToCollectionResponse } from './dto/delete-feed-to-collection.dto';
+import { GetCollectionFeedsRequest, GetCollectionFeedsResponse } from './dto/get-collection-feeds.dto';
+import { GetCollectionsRequest, GetCollectionsResponse } from './dto/get-collections.dto';
 import { ModifyCollectionRequest, ModifyCollectionResponse } from './dto/modify-collection.dto';
+import { GetCollectionFeedsQuery } from './query/get-collection-feeds/get-collection-feeds.query';
+import { GetCollectionsQuery } from './query/get-collections/get-collections.query';
 import { GenerateSwaggerDocumentByErrorCode, ERROR_CODE } from '../lib/exception/error.constant';
 
 @Controller('collection')
@@ -22,6 +26,24 @@ export class CollectionController {
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
   ) {}
+
+  @Get()
+  @ApiOperation({ summary: '컬렉션 리스트', description: '컬렉션 리스트를 조회합니다.' })
+  @GenerateSwaggerDocumentByErrorCode([ERROR_CODE.INTERNAL_SERVER_ERROR])
+  async getCollections(@Query() params: GetCollectionsRequest) {
+    return plainToInstance(GetCollectionsResponse, await this.queryBus.execute(new GetCollectionsQuery(params)));
+  }
+
+  @Get(':collectionId/feed')
+  @ApiOperation({ summary: '컬렉션 피드 리스트', description: '컬렉션 피드 리스트를 조회합니다.' })
+  @ApiParam({ name: 'collectionId', description: '컬렉션 아이디', example: 'clp0wkn6k00007z209fylkkgg' })
+  @GenerateSwaggerDocumentByErrorCode([ERROR_CODE.INTERNAL_SERVER_ERROR, ERROR_CODE.COLLECTION_NOT_FOUND])
+  async getCollectionFeeds(@Param('collectionId') collectionId: string, @Query() params: GetCollectionFeedsRequest) {
+    return plainToInstance(
+      GetCollectionFeedsResponse,
+      await this.queryBus.execute(new GetCollectionFeedsQuery({ ...params, collectionId })),
+    );
+  }
 
   @Post()
   @ApiOperation({ summary: '컬렉션 생성', description: '컬렉션을 생성합니다.' })

@@ -1,12 +1,14 @@
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 
 import { CreateCollectionCommand } from './command/create-collection/create-collection.command';
 import { DeleteCollectionCommand } from './command/delete-collection/delete-collection.command';
+import { ModifyCollectionCommand } from './command/modify-collection/modify-collection.command';
 import { CreateCollectionRequest, CreateCollectionResponse } from './dto/create-collection.dto';
 import { DeleteCollectionResponse } from './dto/delete-collection.dto';
+import { ModifyCollectionRequest, ModifyCollectionResponse } from './dto/modify-collection.dto';
 import { GenerateSwaggerDocumentByErrorCode, ERROR_CODE } from '../lib/exception/error.constant';
 
 @Controller('collection')
@@ -35,6 +37,17 @@ export class CollectionController {
     return plainToInstance(
       DeleteCollectionResponse,
       await this.commandBus.execute(new DeleteCollectionCommand({ collectionId })),
+    );
+  }
+
+  @Patch(':collectionId')
+  @ApiOperation({ summary: '컬렉션 수정', description: '컬렉션을 수정합니다.' })
+  @ApiParam({ name: 'collectionId', description: '컬렉션 아이디', example: 'clp0wkn6k00007z209fylkkgg' })
+  @GenerateSwaggerDocumentByErrorCode([ERROR_CODE.INTERNAL_SERVER_ERROR, ERROR_CODE.COLLECTION_NOT_FOUND])
+  async modifyCollection(@Param('collectionId') collectionId: string, @Body() params: ModifyCollectionRequest) {
+    return plainToInstance(
+      ModifyCollectionResponse,
+      await this.commandBus.execute(new ModifyCollectionCommand({ ...params, collectionId })),
     );
   }
 }

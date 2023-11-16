@@ -28,6 +28,13 @@ export class AddFeedsToCollectionHandler
     if (!feed) {
       throw new NotFoundException(ERROR_CODE.SHARE_ALBUM_FEED_NOT_FOUND);
     }
+    // 이미 컬렉션에 추가된 피드인지 확인
+    const existFeed = await this.prismaService.feedsOnCollection.findFirst({
+      where: { collectionId, feedId },
+    });
+    if (existFeed) {
+      throw new NotFoundException(ERROR_CODE.COLLECTION_FEED_ALREADY_EXIST);
+    }
 
     // 컬렉션 추가
     const result = await this.prismaService.feedsOnCollection.create({

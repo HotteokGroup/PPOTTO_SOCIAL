@@ -3,9 +3,11 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 
+import { AddFeedsToCollectionCommand } from './command/add-feed/add-feed.command';
 import { CreateCollectionCommand } from './command/create-collection/create-collection.command';
 import { DeleteCollectionCommand } from './command/delete-collection/delete-collection.command';
 import { ModifyCollectionCommand } from './command/modify-collection/modify-collection.command';
+import { AddFeedToCollectionRequest, AddFeedToCollectionResponse } from './dto/add-feed-to-collection.dto';
 import { CreateCollectionRequest, CreateCollectionResponse } from './dto/create-collection.dto';
 import { DeleteCollectionResponse } from './dto/delete-collection.dto';
 import { ModifyCollectionRequest, ModifyCollectionResponse } from './dto/modify-collection.dto';
@@ -48,6 +50,22 @@ export class CollectionController {
     return plainToInstance(
       ModifyCollectionResponse,
       await this.commandBus.execute(new ModifyCollectionCommand({ ...params, collectionId })),
+    );
+  }
+
+  @Post(':collectionId/feed')
+  @ApiOperation({ summary: '컬렉션에 피드 추가', description: '컬렉션에 피드를 추가합니다.' })
+  @ApiParam({ name: 'collectionId', description: '컬렉션 아이디', example: 'clp0wkn6k00007z209fylkkgg' })
+  @GenerateSwaggerDocumentByErrorCode([
+    ERROR_CODE.INTERNAL_SERVER_ERROR,
+    ERROR_CODE.COLLECTION_NOT_FOUND,
+    ERROR_CODE.SHARE_ALBUM_FEED_NOT_FOUND,
+    ERROR_CODE.COLLECTION_FEED_ALREADY_EXIST,
+  ])
+  async addFeedToCollection(@Param('collectionId') collectionId: string, @Body() params: AddFeedToCollectionRequest) {
+    return plainToInstance(
+      AddFeedToCollectionResponse,
+      await this.commandBus.execute(new AddFeedsToCollectionCommand({ ...params, collectionId })),
     );
   }
 }

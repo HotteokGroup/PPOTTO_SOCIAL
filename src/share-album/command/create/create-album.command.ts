@@ -3,7 +3,7 @@ export class CreateShareAlbumCommand {
   readonly name: string;
 
   /** 공유앨범 소개 */
-  readonly bio: string;
+  readonly bio?: string;
 
   /** 공유앨범 소유자 아이디 */
   readonly ownerId: number;

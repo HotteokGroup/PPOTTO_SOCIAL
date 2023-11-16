@@ -71,8 +71,8 @@ export const ERROR_CODE = dynamicRecord({
   /**
    * 피드 컬렉션
    */
-  SHARE_ALBUM_FEED_COLLECTION_NOT_FOUND: {
-    errorCode: 'SHARE_ALBUM_FEED_COLLECTION_NOT_FOUND',
+  COLLECTION_NOT_FOUND: {
+    errorCode: 'COLLECTION_NOT_FOUND',
     message: '컬렉션을 찾을 수 없습니다.',
     status: HttpStatus.NOT_FOUND,
   },

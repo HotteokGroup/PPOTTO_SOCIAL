@@ -19,7 +19,7 @@ export class AddFeedsToCollectionHandler
       where: { id: collectionId, deletedAt: null },
     });
     if (!collection) {
-      throw new NotFoundException(ERROR_CODE.SHARE_ALBUM_FEED_COLLECTION_NOT_FOUND);
+      throw new NotFoundException(ERROR_CODE.COLLECTION_NOT_FOUND);
     }
     // 존재하는 피드인지 확인
     const feed = await this.prismaService.feed.findUnique({

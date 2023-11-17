@@ -18,7 +18,6 @@ export class CreateShareAlbumCommand {
 
   largeThumbnailUrl?: string;
 
-  // TODO: 공유앨범 썸네일 등록처리 기능 추가필요
   constructor(params: CreateShareAlbumCommand) {
     Object.assign(this, params);
   }

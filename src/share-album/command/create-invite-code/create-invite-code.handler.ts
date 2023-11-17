@@ -33,7 +33,7 @@ export class CreateShareAlbumInviteCodeHandler
       },
       data: {
         deletedAt: new Date(),
-        code: '',
+        code: null,
       },
     });
 

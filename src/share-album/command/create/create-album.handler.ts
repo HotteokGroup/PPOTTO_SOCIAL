@@ -12,7 +12,7 @@ export class CreateShareAlbumHandler
   constructor(private readonly prismaService: PrismaService) {}
 
   async execute(command: CreateShareAlbumCommand): Promise<CreateShareAlbumCommandResult> {
-    const { name, bio, ownerId } = command;
+    const { name, bio, ownerId, thumbnailId, smallThumbnailUrl, mediumThumbnailUrl, largeThumbnailUrl } = command;
 
     // 공유앨범을 생성 및 멤버로 추가 후 아이디를 반환합니다
     // TODO: 생성일 시간대 UTC변경
@@ -21,6 +21,10 @@ export class CreateShareAlbumHandler
         data: {
           name,
           ...(bio && { bio }),
+          ...(thumbnailId && { thumbnailId }),
+          ...(smallThumbnailUrl && { smallThumbnailUrl }),
+          ...(mediumThumbnailUrl && { mediumThumbnailUrl }),
+          ...(largeThumbnailUrl && { largeThumbnailUrl }),
           shareAlbumMemberList: {
             create: {
               userId: ownerId,

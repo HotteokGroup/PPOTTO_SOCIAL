@@ -1,12 +1,22 @@
 export class ModifyShareAlbumCommand {
   /** 공유앨범 아이디 */
-  readonly id: string;
+  id: string;
 
   /** 공유앨범 명 */
-  readonly name?: string;
+  name?: string;
 
   /** 공유앨범 소개 */
-  readonly bio?: string;
+  bio?: string;
+
+  /** 썸네일 아이디 */
+  thumbnailId?: string;
+
+  /** 썸네일 URL */
+  smallThumbnailUrl?: string;
+
+  mediumThumbnailUrl?: string;
+
+  largeThumbnailUrl?: string;
 
   constructor(params: ModifyShareAlbumCommand) {
     Object.assign(this, params);

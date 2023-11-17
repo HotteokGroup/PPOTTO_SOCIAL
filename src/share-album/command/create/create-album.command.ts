@@ -1,12 +1,22 @@
 export class CreateShareAlbumCommand {
   /** 공유앨범 명 */
-  readonly name: string;
+  name: string;
 
   /** 공유앨범 소개 */
-  readonly bio?: string;
+  bio?: string;
 
   /** 공유앨범 소유자 아이디 */
-  readonly ownerId: number;
+  ownerId: number;
+
+  /** 썸네일 아이디 */
+  thumbnailId?: string;
+
+  /** 썸네일 URL */
+  smallThumbnailUrl?: string;
+
+  mediumThumbnailUrl?: string;
+
+  largeThumbnailUrl?: string;
 
   // TODO: 공유앨범 썸네일 등록처리 기능 추가필요
   constructor(params: CreateShareAlbumCommand) {

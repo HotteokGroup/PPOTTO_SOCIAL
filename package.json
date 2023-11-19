@@ -28,8 +28,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "prisma:generate": "npx prisma generate",
     "prisma:push:local": "dotenv -e environments/.env.local -- npx prisma db push",
-    "prisma:migrate:local": "dotenv -e environments/.env.local -- npx prisma migrate dev"
+    "prisma:migrate:local": "dotenv -e environments/.env.local -- npx prisma migrate dev",
+    "prisma:deploy:prod": "dotenv -e environments/.env.production -- npx prisma migrate deploy"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

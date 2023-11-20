@@ -32,7 +32,6 @@ RUN pnpm i --frozen-lockfile -P
 COPY --from=builder /build/dist ./dist
 COPY --from=builder /build/environments ./environments
 COPY --from=builder /build/prisma ./prisma
-RUN ls -al
 
 EXPOSE 8080
 RUN pnpm run prisma:generate

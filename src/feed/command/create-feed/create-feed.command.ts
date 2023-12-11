@@ -13,7 +13,7 @@ export class CreateFeedCommand {
   /** 피드 콘텐츠 */
   contents: {
     /** 콘텐츠 아이디 */
-    contentId: string;
+    userFileStoreId: string;
 
     /** 콘텐츠 타입 */
     type: FeedContentType;

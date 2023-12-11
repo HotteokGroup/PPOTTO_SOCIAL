@@ -35,7 +35,7 @@ export class CreateFeedHandler implements ICommandHandler<CreateFeedCommand, Cre
         contentList: {
           createMany: {
             data: contents.map((content) => ({
-              contentId: content.contentId,
+              userFileStoreId: content.userFileStoreId,
               type: content.type,
               contentLargeUrl: content.contentLargeUrl,
               contentMediumUrl: content.contentMediumUrl,

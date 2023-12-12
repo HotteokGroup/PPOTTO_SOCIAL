@@ -32,7 +32,7 @@ export class CreateFeedHandler implements ICommandHandler<CreateFeedCommand, Cre
         shareAlbumId,
         userId,
         description,
-        contentList: {
+        contentList: contents && {
           createMany: {
             data: contents.map((content) => ({
               userFileStoreId: content.userFileStoreId,

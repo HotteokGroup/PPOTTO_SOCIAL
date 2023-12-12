@@ -148,7 +148,7 @@ model Feed {
 model FeedContent {
   id               String          @id @default(cuid())
   feedId           String
-  contentId        String
+  userFileStoreId  String
   type             FeedContentType
   contentSmallUrl  String?
   contentMediumUrl String?
@@ -163,7 +163,7 @@ model FeedContent {
   // Index
   @@index([id], name: "FeedContent_id")
   @@index([feedId], name: "FeedContent_feedId")
-  @@index([contentId], name: "FeedContent_contentId")
+  @@index([userFileStoreId], name: "FeedContent_userFileStoreId")
 }
 
 enum FeedContentType {

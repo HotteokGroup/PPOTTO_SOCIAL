@@ -6,7 +6,7 @@ import { ArrayMinSize, IsArray, IsEnum, IsNumber, IsOptional, IsString } from 'c
 export class CreateFeedItem {
   @ApiProperty({ description: '콘텐츠 아이디', example: '123g21hj2' })
   @IsString()
-  contentId: string;
+  userFileStoreId: string;
 
   @ApiProperty({ description: '콘텐츠 타입', example: FeedContentType.IMAGE, enum: FeedContentType })
   @IsEnum(FeedContentType)

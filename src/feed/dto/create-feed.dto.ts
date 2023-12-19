@@ -40,9 +40,10 @@ export class CreateFeedRequest {
 
   @ApiProperty({ description: '피드 콘텐츠', type: [CreateFeedItem] })
   @IsArray()
+  @IsOptional()
   @ArrayMinSize(1)
   @Type(() => CreateFeedItem)
-  contents: CreateFeedItem[];
+  contents?: CreateFeedItem[];
 }
 
 @Exclude()

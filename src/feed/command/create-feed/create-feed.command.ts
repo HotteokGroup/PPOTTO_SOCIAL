@@ -11,7 +11,7 @@ export class CreateFeedCommand {
   description?: string;
 
   /** 피드 콘텐츠 */
-  contents: {
+  contents?: {
     /** 콘텐츠 아이디 */
     userFileStoreId: string;
 

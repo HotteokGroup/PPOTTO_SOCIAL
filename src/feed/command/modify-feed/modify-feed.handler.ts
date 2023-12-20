@@ -35,7 +35,7 @@ export class ModifyFeedHandler implements ICommandHandler<ModifyFeedCommand, boo
       data: {
         description,
         ...(contents && {
-          FeedContent: {
+          contentList: {
             updateMany: {
               where: {
                 feedId: id,
@@ -46,7 +46,7 @@ export class ModifyFeedHandler implements ICommandHandler<ModifyFeedCommand, boo
             },
             createMany: {
               data: contents.map((content) => ({
-                contentId: content.contentId,
+                userFileStoreId: content.userFileStoreId,
                 type: content.type,
                 contentLargeUrl: content.contentLargeUrl,
                 contentMediumUrl: content.contentMediumUrl,
